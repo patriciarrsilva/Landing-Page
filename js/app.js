@@ -19,6 +19,8 @@
  */
 let timeoutID;
 
+const header = document.getElementsByTagName('header')[0];
+
 const navList = document.getElementById('navbar__list');
 
 const sections = document.querySelectorAll('section');
@@ -28,6 +30,13 @@ const sections = document.querySelectorAll('section');
  * Start Helper Functions
  *
  */
+const setLinksAsActive = () => {
+  clearTimeout(timeoutID);
+
+  timeoutID = setTimeout(function() {
+    header.classList.add('page__header--hidden');
+  }, 2000);
+};
 
 /**
  * End Helper Functions
@@ -62,7 +71,6 @@ const buildNav = () => {
 
 // Add class 'active' to section when near top of viewport
 const setSectionsAsActive = () => {
-  const header = document.getElementsByTagName('header')[0];
   header.classList.remove('page__header--hidden');
 
   const minBorderPosition = 250;
@@ -92,12 +100,7 @@ const setSectionsAsActive = () => {
     }
   });
 
-  clearTimeout(timeoutID);
-
-  timeoutID = setTimeout(function() {
-    header.classList.add('page__header--hidden');
-    console.log('Scrolling has stopped.');
-  }, 2000);
+  setLinksAsActive();
 };
 
 // Scroll to anchor ID using scrollTO event
