@@ -17,9 +17,12 @@
  * Define Global Variables
  *
  */
+let timeoutID;
+
 const navList = document.getElementById('navbar__list');
 
 const sections = document.querySelectorAll('section');
+
 /**
  * End Global Variables
  * Start Helper Functions
@@ -59,6 +62,9 @@ const buildNav = () => {
 
 // Add class 'active' to section when near top of viewport
 const setSectionsAsActive = () => {
+  const header = document.getElementsByTagName('header')[0];
+  header.classList.remove('page__header--hidden');
+
   const minBorderPosition = 250;
   const maxBorderPosition = 1020;
 
@@ -85,6 +91,13 @@ const setSectionsAsActive = () => {
       navLink.classList.remove('menu__link--active');
     }
   });
+
+  clearTimeout(timeoutID);
+
+  timeoutID = setTimeout(function() {
+    header.classList.add('page__header--hidden');
+    console.log('Scrolling has stopped.');
+  }, 2000);
 };
 
 // Scroll to anchor ID using scrollTO event
