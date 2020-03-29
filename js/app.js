@@ -45,6 +45,9 @@ const buildNav = () => {
     navLink.setAttribute('href', `#${idValue}`);
     navLink.setAttribute('class', 'menu__link');
     navLink.setAttribute('data-sectionId', `${idValue}`);
+    if (section.id === 'section1') {
+      navLink.classList.add('menu__link--active');
+    }
 
     navItem.appendChild(navLink);
 
@@ -52,7 +55,7 @@ const buildNav = () => {
   });
 
   navList.appendChild(fragment);
-}
+};
 
 // Add class 'active' to section when near top of viewport
 const setSectionsAsActive = () => {
@@ -60,22 +63,32 @@ const setSectionsAsActive = () => {
   const maxBorderPosition = 1020;
 
   sections.forEach(section => {
+    const idValue = section.id;
+    const navLink = document.querySelector(`[data-sectionid=${idValue}]`);
+
     // getBoundingClientRect() returns the size of an element and its position relative to the viewport
     const sectionBottomPosition = section.getBoundingClientRect().bottom;
+    const isFirstSection = section.id === 'section1';
+    const isFirstSectioninView = sectionBottomPosition > minBorderPosition;
+    const isOtherSectioninView =
+      minBorderPosition < sectionBottomPosition &&
+      sectionBottomPosition < maxBorderPosition;
 
     if (
-      sectionBottomPosition > minBorderPosition &&
-      sectionBottomPosition < maxBorderPosition
+      (isFirstSection && isFirstSectioninView) ||
+      (!isFirstSection && isOtherSectioninView)
     ) {
       section.classList.add('active');
+      navLink.classList.add('menu__link--active');
     } else {
       section.classList.remove('active');
+      navLink.classList.remove('menu__link--active');
     }
   });
-}
+};
 
 // Scroll to anchor ID using scrollTO event
-const scrollToSection = (e) => {
+const scrollToSection = e => {
   e.preventDefault();
 
   if (e.target.nodeName === 'A') {
@@ -86,7 +99,7 @@ const scrollToSection = (e) => {
 
     window.scrollTo(0, sectionTopPosition);
   }
-}
+};
 
 /**
  * End Main Functions
