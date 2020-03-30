@@ -240,3 +240,7 @@ section.active .landing__container::after {
     transform: rotate(360deg) translate(-1em) rotate(-360deg);
   }
 }
+
+.article--hidden {
+  display: none;
+}

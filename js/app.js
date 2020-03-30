@@ -21,6 +21,8 @@ let timeoutID;
 
 const header = document.getElementsByTagName('header')[0];
 
+const main = document.getElementsByTagName('main')[0];
+
 const navList = document.getElementById('navbar__list');
 
 const sections = document.querySelectorAll('section');
@@ -130,3 +132,12 @@ navList.addEventListener('click', scrollToSection);
 
 // Set sections as active
 document.addEventListener('scroll', setSectionsAsActive);
+
+// Collapse sections
+main.addEventListener('click', function(e) {
+  if (e.target.nodeName === 'H2') {
+    const dataH2 = e.target.dataset.h;
+    const article = document.querySelector(`[data-article='${dataH2}']`);
+    article.classList.toggle('article--hidden');
+  }
+});
