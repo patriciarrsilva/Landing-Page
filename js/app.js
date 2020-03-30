@@ -27,6 +27,8 @@ const navList = document.getElementById('navbar__list');
 
 const sections = document.querySelectorAll('section');
 
+const scrollToTopButton = document.getElementById('scrollToTop');
+
 /**
  * End Global Variables
  * Start Helper Functions
@@ -76,7 +78,7 @@ const setSectionsAsActive = () => {
   header.classList.remove('page__header--hidden');
 
   const minBorderPosition = 250;
-  const maxBorderPosition = 1020;
+  const maxBorderPosition = 800;
 
   sections.forEach(section => {
     const idValue = section.id;
@@ -85,7 +87,7 @@ const setSectionsAsActive = () => {
     // getBoundingClientRect() returns the size of an element and its position relative to the viewport
     const sectionBottomPosition = section.getBoundingClientRect().bottom;
     const isFirstSection = section.id === 'section1';
-    const isFirstSectioninView = sectionBottomPosition > minBorderPosition;
+    const isFirstSectioninView = minBorderPosition < sectionBottomPosition;
     const isOtherSectioninView =
       minBorderPosition < sectionBottomPosition &&
       sectionBottomPosition < maxBorderPosition;
@@ -119,6 +121,29 @@ const scrollToSection = e => {
   }
 };
 
+// Show scroll to top button
+const showButton = () => {
+  if (window.scrollY > 500) {
+    scrollToTopButton.classList.add('scrollToTopButton--visible');
+  } else {
+    scrollToTopButton.classList.remove('scrollToTopButton--visible');
+  }
+};
+
+// Scroll to top
+const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
+
+// Collapse sections
+const collapseSections = e => {
+  if (e.target.nodeName === 'H2') {
+    const dataH2 = e.target.dataset.h;
+    const article = document.querySelector(`[data-article='${dataH2}']`);
+    article.classList.toggle('article--hidden');
+  }
+};
+
 /**
  * End Main Functions
  * Begin Events
@@ -133,11 +158,11 @@ navList.addEventListener('click', scrollToSection);
 // Set sections as active
 document.addEventListener('scroll', setSectionsAsActive);
 
+// Make scrool to top button visible
+document.addEventListener('scroll', showButton);
+
+// Scroll to top
+scrollToTopButton.addEventListener('click', scrollToTop);
+
 // Collapse sections
-main.addEventListener('click', function(e) {
-  if (e.target.nodeName === 'H2') {
-    const dataH2 = e.target.dataset.h;
-    const article = document.querySelector(`[data-article='${dataH2}']`);
-    article.classList.toggle('article--hidden');
-  }
-});
+main.addEventListener('click', collapseSections);

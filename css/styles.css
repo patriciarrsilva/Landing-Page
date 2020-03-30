@@ -37,9 +37,14 @@ h1 {
 
 h2 {
   border-bottom: 1px solid #cc1;
+  cursor: pointer;
   font-family: 'Oxygen', Sans-Serif;
   font-size: 3em;
   color: #fff;
+}
+
+h2:hover {
+  text-decoration: underline;
 }
 
 p {
@@ -243,4 +248,28 @@ section.active .landing__container::after {
 
 .article--hidden {
   display: none;
+}
+
+.scrollToTopButton {
+  background: #02b3e4;
+  border: none;
+  cursor: pointer;
+  position: sticky;
+  float: right;
+  font-size: 16px;
+  margin: 10px;
+  max-width: 200px;
+  opacity: 0.5;
+  padding: 10px;
+  top: 50px;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.scrollToTopButton:hover {
+  font-weight: bold;
+}
+
+.scrollToTopButton--visible {
+  visibility: visible;
 }
